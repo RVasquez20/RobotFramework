@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231024 21:38:59.693" rpa="false" schemaversion="4">
+<suite id="s1" name="Api Test" source="C:\Users\rodri\Documents\GitHub\Aseguraminto de la calidad del software\RobotFramework\api_test.robot">
+<kw name="Disable Warnings" library="utils" type="SETUP">
+<status status="PASS" starttime="20231024 21:38:59.772" endtime="20231024 21:38:59.773"/>
+</kw>
+<test id="s1-t1" name="Authentication Test" line="29">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231024 21:38:59.773" level="INFO">Creating Session using : alias=myapi, url=https://localhost:7022/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231024 21:38:59.773" endtime="20231024 21:38:59.773"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:38:59.774" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" starttime="20231024 21:38:59.774" endtime="20231024 21:38:59.774"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:38:59.774" level="INFO">${data} = {'username': 'rvasquez', 'password': '123'}</msg>
+<status status="PASS" starttime="20231024 21:38:59.774" endtime="20231024 21:38:59.774"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>/Authentication/login</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:38:59.873" level="INFO">POST Request : url=https://localhost:7022/api/Authentication/login 
+ path_url=/api/Authentication/login 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '43'} 
+ body=b'{"username": "rvasquez", "password": "123"}' 
+ </msg>
+<msg timestamp="20231024 21:38:59.873" level="INFO">POST Response : url=https://localhost:7022/api/Authentication/login 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:38:59 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idUsuario":1,"username":"rvasquez","password":"123","idRol":1,"active":true,"rol":"Administrador"} 
+ </msg>
+<msg timestamp="20231024 21:38:59.873" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:38:59.774" endtime="20231024 21:38:59.873"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:38:59.874" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:38:59.873" endtime="20231024 21:38:59.874"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:38:59.875" level="INFO">${json_response} = {'idUsuario': 1, 'username': 'rvasquez', 'password': '123', 'idRol': 1, 'active': True, 'rol': 'Administrador'}</msg>
+<status status="PASS" starttime="20231024 21:38:59.874" endtime="20231024 21:38:59.875"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${json_response['username']}</arg>
+<arg>${username}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20231024 21:38:59.875" endtime="20231024 21:38:59.875"/>
+</kw>
+<kw name="Should Be Equal As Numbers" library="BuiltIn">
+<arg>${json_response['idRol']}</arg>
+<arg>${idRol}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<msg timestamp="20231024 21:38:59.876" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:38:59.875" endtime="20231024 21:38:59.876"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${json_response['active']}</arg>
+<arg>${True}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20231024 21:38:59.876" endtime="20231024 21:38:59.876"/>
+</kw>
+<status status="PASS" starttime="20231024 21:38:59.773" endtime="20231024 21:38:59.876"/>
+</test>
+<test id="s1-t2" name="Get Existing Role" line="39">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231024 21:38:59.877" level="INFO">Creating Session using : alias=myapi, url=https://localhost:7022/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231024 21:38:59.877" endtime="20231024 21:38:59.877"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Roles/${EXISTING_ROLE_ID}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:38:59.877" level="INFO">${endpoint} = /Roles/1</msg>
+<status status="PASS" starttime="20231024 21:38:59.877" endtime="20231024 21:38:59.877"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:38:59.975" level="INFO">GET Request : url=https://localhost:7022/api/Roles/1 
+ path_url=/api/Roles/1 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20231024 21:38:59.975" level="INFO">GET Response : url=https://localhost:7022/api/Roles/1 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:38:59 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idRol":1,"rol":"Administrador"} 
+ </msg>
+<msg timestamp="20231024 21:38:59.975" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:38:59.878" endtime="20231024 21:38:59.975"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:38:59.976" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:38:59.975" endtime="20231024 21:38:59.976"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:38:59.976" level="INFO">${json_response} = {'idRol': 1, 'rol': 'Administrador'}</msg>
+<status status="PASS" starttime="20231024 21:38:59.976" endtime="20231024 21:38:59.976"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>'idRol' in ${json_response}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20231024 21:38:59.976" endtime="20231024 21:38:59.977"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>'rol' in ${json_response}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20231024 21:38:59.977" endtime="20231024 21:38:59.977"/>
+</kw>
+<status status="PASS" starttime="20231024 21:38:59.877" endtime="20231024 21:38:59.977"/>
+</test>
+<test id="s1-t3" name="Get Non-Existing Role" line="48">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231024 21:38:59.978" level="INFO">Creating Session using : alias=myapi, url=https://localhost:7022/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231024 21:38:59.978" endtime="20231024 21:38:59.978"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Roles/${NON_EXISTING_ROLE_ID}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:38:59.978" level="INFO">${endpoint} = /Roles/999999</msg>
+<status status="PASS" starttime="20231024 21:38:59.978" endtime="20231024 21:38:59.978"/>
+</kw>
+<kw name="Get Request And Continue On Failure" library="my_keywords">
+<var>${response}</var>
+<arg>${BASE_URL}</arg>
+<arg>${endpoint}</arg>
+<msg timestamp="20231024 21:39:00.022" level="INFO">${response} = {'status_code': 404, 'json': None}</msg>
+<status status="PASS" starttime="20231024 21:38:59.978" endtime="20231024 21:39:00.022"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response['status_code']}</arg>
+<arg>404</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:00.023" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.023" endtime="20231024 21:39:00.023"/>
+</kw>
+<status status="PASS" starttime="20231024 21:38:59.977" endtime="20231024 21:39:00.024"/>
+</test>
+<test id="s1-t4" name="Add New Country And Verify" line="54">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231024 21:39:00.025" level="INFO">Creating Session using : alias=myapi, url=https://localhost:7022/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231024 21:39:00.025" endtime="20231024 21:39:00.026"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.026" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" starttime="20231024 21:39:00.026" endtime="20231024 21:39:00.026"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>Pais=${PAIS_NAME}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.026" level="INFO">${data} = {'Pais': 'PaisTest'}</msg>
+<status status="PASS" starttime="20231024 21:39:00.026" endtime="20231024 21:39:00.026"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>/Paises</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.195" level="INFO">POST Request : url=https://localhost:7022/api/Paises 
+ path_url=/api/Paises 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '20'} 
+ body=b'{"Pais": "PaisTest"}' 
+ </msg>
+<msg timestamp="20231024 21:39:00.195" level="INFO">POST Response : url=https://localhost:7022/api/Paises 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:38:59 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idPais":53,"pais":"PaisTest"} 
+ </msg>
+<msg timestamp="20231024 21:39:00.195" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.026" endtime="20231024 21:39:00.195"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:00.196" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.195" endtime="20231024 21:39:00.196"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.196" level="INFO">${json_response} = {'idPais': 53, 'pais': 'PaisTest'}</msg>
+<status status="PASS" starttime="20231024 21:39:00.196" endtime="20231024 21:39:00.196"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>'idPais' in ${json_response}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20231024 21:39:00.196" endtime="20231024 21:39:00.197"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${NEW_COUNTRY_ID}</var>
+<arg>${json_response['idPais']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.197" level="INFO">${NEW_COUNTRY_ID} = 53</msg>
+<status status="PASS" starttime="20231024 21:39:00.197" endtime="20231024 21:39:00.197"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Paises/${NEW_COUNTRY_ID}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.197" level="INFO">${endpoint} = /Paises/53</msg>
+<status status="PASS" starttime="20231024 21:39:00.197" endtime="20231024 21:39:00.197"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.329" level="INFO">GET Request : url=https://localhost:7022/api/Paises/53 
+ path_url=/api/Paises/53 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20231024 21:39:00.329" level="INFO">GET Response : url=https://localhost:7022/api/Paises/53 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:38:59 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idPais":53,"pais":"PaisTest"} 
+ </msg>
+<msg timestamp="20231024 21:39:00.330" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.198" endtime="20231024 21:39:00.330"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:00.330" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.330" endtime="20231024 21:39:00.330"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.331" level="INFO">${json_response} = {'idPais': 53, 'pais': 'PaisTest'}</msg>
+<status status="PASS" starttime="20231024 21:39:00.331" endtime="20231024 21:39:00.331"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${json_response['pais']}</arg>
+<arg>${PAIS_NAME}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20231024 21:39:00.331" endtime="20231024 21:39:00.332"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:00.025" endtime="20231024 21:39:00.332"/>
+</test>
+<test id="s1-t5" name="Add New User And Verify And Update" line="71">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231024 21:39:00.333" level="INFO">Creating Session using : alias=myapi, url=https://localhost:7022/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231024 21:39:00.333" endtime="20231024 21:39:00.333"/>
+</kw>
+<kw name="Get UserId If Exists">
+<var>${existingUserId}</var>
+<arg>${newUsername}</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Usuarios</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.333" level="INFO">${endpoint} = /Usuarios</msg>
+<status status="PASS" starttime="20231024 21:39:00.333" endtime="20231024 21:39:00.333"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.463" level="INFO">GET Request : url=https://localhost:7022/api/Usuarios 
+ path_url=/api/Usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20231024 21:39:00.463" level="INFO">GET Response : url=https://localhost:7022/api/Usuarios 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body=[{"idUsuario":1,"username":"rvasquez","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":2,"username":"Ericka Gonzalez","password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":3,"username":"Mario","password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3","active":true,"idRol":2,"nombreRol":"Usuario"},{"idUsuario":9,"username":"Test1","password":"123","active":true,"idRol":2,"nombreRol":"Usuario"},{"idUsuario":10,"username":"kzea","password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3","active":true,"idRol":5,"nombreRol":"Rol12"},{"idUsuario":38,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":40,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":41,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":42,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":43,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":44,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":45,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":46,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":47,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":48,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":49,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":50,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":51,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":52,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":53,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":54,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":55,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":56,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"}] 
+ </msg>
+<msg timestamp="20231024 21:39:00.463" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.333" endtime="20231024 21:39:00.463"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>@{users}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.464" level="INFO">@{users} = [ {'idUsuario': 1, 'username': 'rvasquez', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'} | {'idUsuario': 2, 'username': 'Ericka Gonzalez', 'password': 'a665a45920422f9d4...</msg>
+<status status="PASS" starttime="20231024 21:39:00.463" endtime="20231024 21:39:00.464"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>None</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.464" level="INFO">${userId} = None</msg>
+<status status="PASS" starttime="20231024 21:39:00.464" endtime="20231024 21:39:00.464"/>
+</kw>
+<for flavor="IN">
+<var>${user}</var>
+<value>@{users}</value>
+<iter>
+<var name="${user}">{'idUsuario': 1, 'username': 'rvasquez', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.464" endtime="20231024 21:39:00.464"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.465"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.464" endtime="20231024 21:39:00.465"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.464" endtime="20231024 21:39:00.465"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.464" endtime="20231024 21:39:00.465"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 2, 'username': 'Ericka Gonzalez', 'password': 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.465"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.465"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.465"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.465"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.465"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 3, 'username': 'Mario', 'password': 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'active': True, 'idRol': 2, 'nombreRol': 'Usuario'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.466"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.466"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.465" endtime="20231024 21:39:00.466"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 9, 'username': 'Test1', 'password': '123', 'active': True, 'idRol': 2, 'nombreRol': 'Usuario'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.466"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 10, 'username': 'kzea', 'password': 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'active': True, 'idRol': 5, 'nombreRol': 'Rol12'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.467"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.467"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.466" endtime="20231024 21:39:00.467"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 38, 'username': 'TestUserUpdate', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.467"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 40, 'username': 'TestUserUpdate', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.468" endtime="20231024 21:39:00.468"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:00.468" endtime="20231024 21:39:00.468"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.468"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.468"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.467" endtime="20231024 21:39:00.468"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 41, 'username': 'TestUser', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.469" level="INFO">${userId} = 41</msg>
+<status status="PASS" starttime="20231024 21:39:00.468" endtime="20231024 21:39:00.469"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<msg timestamp="20231024 21:39:00.469" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20231024 21:39:00.469" endtime="20231024 21:39:00.469"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:00.468" endtime="20231024 21:39:00.469"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:00.468" endtime="20231024 21:39:00.469"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:00.468" endtime="20231024 21:39:00.469"/>
+</iter>
+<status status="PASS" starttime="20231024 21:39:00.464" endtime="20231024 21:39:00.469"/>
+</for>
+<msg timestamp="20231024 21:39:00.469" level="INFO">${existingUserId} = 41</msg>
+<status status="PASS" starttime="20231024 21:39:00.333" endtime="20231024 21:39:00.469"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${existingUserId}' != 'None'</arg>
+<arg>Delete Existing User</arg>
+<arg>${existingUserId}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Delete Existing User">
+<arg>${existingUserId}</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Usuarios/${userId}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.470" level="INFO">${endpoint} = /Usuarios/41</msg>
+<status status="PASS" starttime="20231024 21:39:00.470" endtime="20231024 21:39:00.470"/>
+</kw>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.626" level="INFO">DELETE Request : url=https://localhost:7022/api/Usuarios/41 
+ path_url=/api/Usuarios/41 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20231024 21:39:00.626" level="INFO">DELETE Response : url=https://localhost:7022/api/Usuarios/41 
+ status=200, reason=OK 
+ headers={'Content-Type': 'text/plain; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body=usuario eliminado 
+ </msg>
+<msg timestamp="20231024 21:39:00.627" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.470" endtime="20231024 21:39:00.627"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:00.627" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.627" endtime="20231024 21:39:00.627"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:00.470" endtime="20231024 21:39:00.627"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:00.470" endtime="20231024 21:39:00.627"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.628" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" starttime="20231024 21:39:00.628" endtime="20231024 21:39:00.628"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${dataInsert}</var>
+<arg>username=${newUsername}</arg>
+<arg>password=${newPassword}</arg>
+<arg>idRol=${newIdRol}</arg>
+<arg>active=${True}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.628" level="INFO">${dataInsert} = {'username': 'TestUser', 'password': '123', 'idRol': '1', 'active': True}</msg>
+<status status="PASS" starttime="20231024 21:39:00.628" endtime="20231024 21:39:00.628"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>/Usuarios</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${dataInsert}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.713" level="INFO">POST Request : url=https://localhost:7022/api/Usuarios 
+ path_url=/api/Usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '73'} 
+ body=b'{"username": "TestUser", "password": "123", "idRol": "1", "active": true}' 
+ </msg>
+<msg timestamp="20231024 21:39:00.713" level="INFO">POST Response : url=https://localhost:7022/api/Usuarios 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idUsuario":57,"idRol":1,"username":"TestUser","password":"123","active":true} 
+ </msg>
+<msg timestamp="20231024 21:39:00.713" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.628" endtime="20231024 21:39:00.713"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.714" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" starttime="20231024 21:39:00.713" endtime="20231024 21:39:00.714"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${DataUpdate}</var>
+<arg>username=${newUsername}</arg>
+<arg>password=${newPassword}</arg>
+<arg>idRol=${newIdRol}</arg>
+<arg>active=${True}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.714" level="INFO">${DataUpdate} = {'username': 'TestUser', 'password': '123', 'idRol': '1', 'active': True}</msg>
+<status status="PASS" starttime="20231024 21:39:00.714" endtime="20231024 21:39:00.714"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>/Usuarios</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${DataUpdate}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.801" level="INFO">POST Request : url=https://localhost:7022/api/Usuarios 
+ path_url=/api/Usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '73'} 
+ body=b'{"username": "TestUser", "password": "123", "idRol": "1", "active": true}' 
+ </msg>
+<msg timestamp="20231024 21:39:00.801" level="INFO">POST Response : url=https://localhost:7022/api/Usuarios 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idUsuario":58,"idRol":1,"username":"TestUser","password":"123","active":true} 
+ </msg>
+<msg timestamp="20231024 21:39:00.801" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.714" endtime="20231024 21:39:00.801"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:00.802" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.802" endtime="20231024 21:39:00.802"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.803" level="INFO">${json_response} = {'idUsuario': 58, 'idRol': 1, 'username': 'TestUser', 'password': '123', 'active': True}</msg>
+<status status="PASS" starttime="20231024 21:39:00.802" endtime="20231024 21:39:00.803"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>'idUsuario' in ${json_response}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" starttime="20231024 21:39:00.803" endtime="20231024 21:39:00.803"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${NewUserId}</var>
+<arg>${json_response['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.804" level="INFO">${NewUserId} = 58</msg>
+<status status="PASS" starttime="20231024 21:39:00.803" endtime="20231024 21:39:00.804"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Usuarios/${NewUserId}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.804" level="INFO">${endpoint} = /Usuarios/58</msg>
+<status status="PASS" starttime="20231024 21:39:00.804" endtime="20231024 21:39:00.804"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:00.921" level="INFO">GET Request : url=https://localhost:7022/api/Usuarios/58 
+ path_url=/api/Usuarios/58 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20231024 21:39:00.921" level="INFO">GET Response : url=https://localhost:7022/api/Usuarios/58 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idUsuario":58,"idRol":1,"username":"TestUser","password":"123","active":true} 
+ </msg>
+<msg timestamp="20231024 21:39:00.921" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.804" endtime="20231024 21:39:00.921"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:00.922" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.921" endtime="20231024 21:39:00.922"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:00.923" level="INFO">${json_response} = {'idUsuario': 58, 'idRol': 1, 'username': 'TestUser', 'password': '123', 'active': True}</msg>
+<status status="PASS" starttime="20231024 21:39:00.922" endtime="20231024 21:39:00.923"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${json_response['username']}</arg>
+<arg>${newUsername}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20231024 21:39:00.923" endtime="20231024 21:39:00.923"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>idUsuario=${NewUserId}</arg>
+<arg>username=${usernameUpdate}</arg>
+<arg>password=${newPassword}</arg>
+<arg>idRol=${newIdRol}</arg>
+<arg>active=${True}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.924" level="INFO">${data} = {'idUsuario': 58, 'username': 'TestUserUpdate', 'password': '123', 'idRol': '1', 'active': True}</msg>
+<status status="PASS" starttime="20231024 21:39:00.923" endtime="20231024 21:39:00.924"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:00.924" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" starttime="20231024 21:39:00.924" endtime="20231024 21:39:00.924"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>/Usuarios/${NewUserId}</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${data}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:01.138" level="INFO">PUT Request : url=https://localhost:7022/api/Usuarios/58 
+ path_url=/api/Usuarios/58 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '96'} 
+ body=b'{"idUsuario": 58, "username": "TestUserUpdate", "password": "123", "idRol": "1", "active": true}' 
+ </msg>
+<msg timestamp="20231024 21:39:01.138" level="INFO">PUT Response : url=https://localhost:7022/api/Usuarios/58 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idUsuario":58,"idRol":1,"username":"TestUserUpdate","password":"123","active":true} 
+ </msg>
+<msg timestamp="20231024 21:39:01.138" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:00.924" endtime="20231024 21:39:01.138"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:01.139" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:01.138" endtime="20231024 21:39:01.139"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:01.140" level="INFO">${json_response} = {'idUsuario': 58, 'idRol': 1, 'username': 'TestUserUpdate', 'password': '123', 'active': True}</msg>
+<status status="PASS" starttime="20231024 21:39:01.139" endtime="20231024 21:39:01.140"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>${json_response['username']}</arg>
+<arg>${usernameUpdate}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20231024 21:39:01.140" endtime="20231024 21:39:01.141"/>
+</kw>
+<kw name="Get UserId If Exists">
+<var>${existingUserId}</var>
+<arg>${usernameUpdate}</arg>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Usuarios</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:01.141" level="INFO">${endpoint} = /Usuarios</msg>
+<status status="PASS" starttime="20231024 21:39:01.141" endtime="20231024 21:39:01.141"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:01.212" level="INFO">GET Request : url=https://localhost:7022/api/Usuarios 
+ path_url=/api/Usuarios 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20231024 21:39:01.212" level="INFO">GET Response : url=https://localhost:7022/api/Usuarios 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:00 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body=[{"idUsuario":1,"username":"rvasquez","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":2,"username":"Ericka Gonzalez","password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":3,"username":"Mario","password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3","active":true,"idRol":2,"nombreRol":"Usuario"},{"idUsuario":9,"username":"Test1","password":"123","active":true,"idRol":2,"nombreRol":"Usuario"},{"idUsuario":10,"username":"kzea","password":"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3","active":true,"idRol":5,"nombreRol":"Rol12"},{"idUsuario":38,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":40,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":42,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":43,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":44,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":45,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":46,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":47,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":48,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":49,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":50,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":51,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":52,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":53,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":54,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":55,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":56,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":57,"username":"TestUser","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"},{"idUsuario":58,"username":"TestUserUpdate","password":"123","active":true,"idRol":1,"nombreRol":"Administrador"}] 
+ </msg>
+<msg timestamp="20231024 21:39:01.212" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:01.141" endtime="20231024 21:39:01.212"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>@{users}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:01.213" level="INFO">@{users} = [ {'idUsuario': 1, 'username': 'rvasquez', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'} | {'idUsuario': 2, 'username': 'Ericka Gonzalez', 'password': 'a665a45920422f9d4...</msg>
+<status status="PASS" starttime="20231024 21:39:01.213" endtime="20231024 21:39:01.214"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>None</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:01.214" level="INFO">${userId} = None</msg>
+<status status="PASS" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.214"/>
+</kw>
+<for flavor="IN">
+<var>${user}</var>
+<value>@{users}</value>
+<iter>
+<var name="${user}">{'idUsuario': 1, 'username': 'rvasquez', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.214"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.214"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.214"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.214"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.214"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 2, 'username': 'Ericka Gonzalez', 'password': 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.215" endtime="20231024 21:39:01.215"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.215" endtime="20231024 21:39:01.215"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.215"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.215"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.215"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 3, 'username': 'Mario', 'password': 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'active': True, 'idRol': 2, 'nombreRol': 'Usuario'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.216" endtime="20231024 21:39:01.216"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.216" endtime="20231024 21:39:01.216"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:01.215" endtime="20231024 21:39:01.216"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:01.215" endtime="20231024 21:39:01.216"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:01.215" endtime="20231024 21:39:01.216"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 9, 'username': 'Test1', 'password': '123', 'active': True, 'idRol': 2, 'nombreRol': 'Usuario'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:01.216" endtime="20231024 21:39:01.217"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:01.216" endtime="20231024 21:39:01.217"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:01.216" endtime="20231024 21:39:01.217"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 10, 'username': 'kzea', 'password': 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'active': True, 'idRol': 5, 'nombreRol': 'Rol12'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<status status="NOT RUN" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</kw>
+<status status="NOT RUN" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:01.217" endtime="20231024 21:39:01.217"/>
+</iter>
+<iter>
+<var name="${user}">{'idUsuario': 38, 'username': 'TestUserUpdate', 'password': '123', 'active': True, 'idRol': 1, 'nombreRol': 'Administrador'}</var>
+<if>
+<branch type="IF" condition="'${user[&quot;username&quot;]}' == '${username}'">
+<kw name="Set Variable" library="BuiltIn">
+<var>${userId}</var>
+<arg>${user['idUsuario']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:01.218" level="INFO">${userId} = 38</msg>
+<status status="PASS" starttime="20231024 21:39:01.218" endtime="20231024 21:39:01.218"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing FOR loop.</doc>
+<msg timestamp="20231024 21:39:01.219" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20231024 21:39:01.219" endtime="20231024 21:39:01.219"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:01.218" endtime="20231024 21:39:01.219"/>
+</branch>
+<status status="PASS" starttime="20231024 21:39:01.218" endtime="20231024 21:39:01.219"/>
+</if>
+<status status="PASS" starttime="20231024 21:39:01.218" endtime="20231024 21:39:01.219"/>
+</iter>
+<status status="PASS" starttime="20231024 21:39:01.214" endtime="20231024 21:39:01.219"/>
+</for>
+<msg timestamp="20231024 21:39:01.219" level="INFO">${existingUserId} = 38</msg>
+<status status="PASS" starttime="20231024 21:39:01.141" endtime="20231024 21:39:01.219"/>
+</kw>
+<kw name="Should Not Be Equal As Strings" library="BuiltIn">
+<arg>${existingUserId}</arg>
+<arg>None</arg>
+<doc>Fails if objects are equal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:01.219" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:01.219" endtime="20231024 21:39:01.219"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:00.332" endtime="20231024 21:39:01.220"/>
+</test>
+<test id="s1-t6" name="Send Payment and Verify Response" line="105">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231024 21:39:01.221" level="INFO">Creating Session using : alias=myapi, url=https://localhost:7022/api/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231024 21:39:01.220" endtime="20231024 21:39:01.221"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:01.221" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" starttime="20231024 21:39:01.221" endtime="20231024 21:39:01.221"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>saveCard=${False}</arg>
+<arg>nombreTarjeta=${NOMBRE_TARJETA}</arg>
+<arg>idCliente=${ID_CLIENTE}</arg>
+<arg>montoPago=${MONTO_PAGO}</arg>
+<arg>idCompra=${ID_COMPRA}</arg>
+<arg>tokenCard=${TOKEN_CARD}</arg>
+<arg>expMonth=${EXP_MONTH}</arg>
+<arg>expYear=${EXP_YEAR}</arg>
+<arg>cvs=${CVS}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231024 21:39:01.222" level="INFO">&amp;{payload} = { saveCard=False | nombreTarjeta=Juan Perez | idCliente=7 | montoPago=1000 | idCompra=41 | tokenCard=4242424242424242 | expMonth=10 | expYear=2023 | cvs=845 }</msg>
+<status status="PASS" starttime="20231024 21:39:01.221" endtime="20231024 21:39:01.222"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${payload}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20231024 21:39:01.222" endtime="20231024 21:39:01.222"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>/Payments</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20231024 21:39:03.088" level="INFO">POST Request : url=https://localhost:7022/api/Payments 
+ path_url=/api/Payments 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '191'} 
+ body=b'{"saveCard": false, "nombreTarjeta": "Juan Perez", "idCliente": "7", "montoPago": "1000", "idCompra": "41", "tokenCard": "4242424242424242", "expMonth": "10", "expYear": "2023", "cvs": "845"}' 
+ </msg>
+<msg timestamp="20231024 21:39:03.088" level="INFO">POST Response : url=https://localhost:7022/api/Payments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Date': 'Wed, 25 Oct 2023 03:39:02 GMT', 'Server': 'Kestrel', 'Transfer-Encoding': 'chunked', 'Request-Context': 'appId='} 
+ body={"idPago":65,"idCompra":41,"fechaPago":"2023-10-24T21:39:03.0418203-06:00","montoPago":1000} 
+ </msg>
+<msg timestamp="20231024 21:39:03.088" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:01.222" endtime="20231024 21:39:03.088"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20231024 21:39:03.089" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:03.089" endtime="20231024 21:39:03.089"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231024 21:39:03.090" level="INFO">${json_response} = {'idPago': 65, 'idCompra': 41, 'fechaPago': '2023-10-24T21:39:03.0418203-06:00', 'montoPago': 1000}</msg>
+<status status="PASS" starttime="20231024 21:39:03.089" endtime="20231024 21:39:03.090"/>
+</kw>
+<kw name="Should Be Equal As Numbers" library="BuiltIn">
+<arg>${json_response['idCompra']}</arg>
+<arg>${ID_COMPRA}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<msg timestamp="20231024 21:39:03.090" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:03.090" endtime="20231024 21:39:03.090"/>
+</kw>
+<kw name="Should Be Equal As Numbers" library="BuiltIn">
+<arg>${json_response['montoPago']}</arg>
+<arg>${MONTO_PAGO}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<msg timestamp="20231024 21:39:03.091" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20231024 21:39:03.090" endtime="20231024 21:39:03.091"/>
+</kw>
+<status status="PASS" starttime="20231024 21:39:01.220" endtime="20231024 21:39:03.091"/>
+</test>
+<status status="PASS" starttime="20231024 21:38:59.694" endtime="20231024 21:39:03.092"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="6" fail="0" skip="0" id="s1" name="Api Test">Api Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

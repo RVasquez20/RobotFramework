@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231024 19:10:28.765" rpa="false" schemaversion="4">
+<suite id="s1" name="Robot Interactive Console" source="c:\Users\rodri\.vscode\extensions\robocorp.robotframework-lsp-1.11.0\src\robotframework_ls\vendored\robotframework_interactive\robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="Create Session">
+<arg>myapi</arg>
+<arg>${BASE_URL}</arg>
+<arg>verify=False</arg>
+<msg timestamp="20231024 19:10:29.607" level="FAIL">No keyword with name 'Create Session' found.</msg>
+<status status="FAIL" starttime="20231024 19:10:29.607" endtime="20231024 19:10:29.607"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${endpoint}</var>
+<arg>/Roles/${EXISTING_ROLE_ID}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 19:10:29.607" endtime="20231024 19:10:29.607"/>
+</kw>
+<kw name="GET On Session">
+<var>${response}</var>
+<arg>myapi</arg>
+<arg>${endpoint}</arg>
+<status status="NOT RUN" starttime="20231024 19:10:29.607" endtime="20231024 19:10:29.607"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" starttime="20231024 19:10:29.607" endtime="20231024 19:10:29.609"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20231024 19:10:29.609" endtime="20231024 19:10:29.609"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>'idRol' in ${json_response}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="NOT RUN" starttime="20231024 19:10:29.609" endtime="20231024 19:10:29.609"/>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<arg>'rol' in ${json_response}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="NOT RUN" starttime="20231024 19:10:29.609" endtime="20231024 19:10:29.609"/>
+</kw>
+<status status="PASS" starttime="20231024 19:10:28.783" endtime="20231024 19:10:30.651"/>
+</kw>
+<status status="PASS" starttime="20231024 19:10:28.782" endtime="20231024 19:10:30.651"/>
+</test>
+<status status="PASS" starttime="20231024 19:10:28.766" endtime="20231024 19:10:30.652"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
